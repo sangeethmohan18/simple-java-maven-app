@@ -2,15 +2,23 @@ pipeline {
 	
 	stages {
 
-		stage ('cloning the repo') {
+		stage ('Build stage') {
 
 			steps {
 
-				sh "git clone https://github.com/sangeethmohan18/simple-java-maven-app.git"
-
-            }
-                               }
+				sh "mvn -B -DskipTests clean package"
 
 
-          }
-          }
+
+		           }
+
+
+		}
+
+
+
+
+
+
+	}
+}
