@@ -1,6 +1,6 @@
 pipeline {
 
-	agent { label 'slave1'}
+	agent any
 	
 	stages {
 
@@ -9,7 +9,14 @@ pipeline {
 			steps {
 
 				sh "mvn -B -DskipTests clean package"
+				slackSend channel: 'jen-slackintegration', message: 'Build started'
                    }
+			post {
+				success {
+					archiveArtifacts artifacts: 'target/*.jar', followSymlinks: false, fingerprint: true,onlyIfSuccessful: true
+				}
+					
+			}
 
 
 		                      }
@@ -22,16 +29,7 @@ pipeline {
 
 				  }
 
-			post {
 			
-				always{
-
-					junit 'target/surefire-reports/*.xml'
-
-
-   						}	  
-               	}
-
 
 
                            }                    
